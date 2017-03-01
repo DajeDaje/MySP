@@ -1,10 +1,9 @@
 ;; START
+
 (defrule start 
 	(declare (salience 10000))
 	=>
-	(set-fact-duplication TRUE)
-)
-
+	(set-fact-duplication TRUE))
 
 ;; QUESTIONS
 (defrule ask-a-question
@@ -15,6 +14,7 @@
 			(symptom ?the-symptom)
 			(valid-answers $?valid-answers)
 			(exclusions $?exclusions))
+			
 	?a <- (conversation (name answers) (values $?answers))
 	?q <- (conversation (name questions) (values $?questions))
 	?s <- (conversation (name symptoms) (values $?symptoms))
@@ -57,9 +57,7 @@
 	(assert (diagnosis (name ?symptom)
 					(value ?value)
 					(certainty (/ (* ?c1 ?c2) 100))))
-
 )
-
 
 ;; CERTAINTY
 (defrule combine-certainties
@@ -69,9 +67,9 @@
 	(test (neq ?rem1 ?rem2))
 	=>
 	(retract ?rem1)
-	(modify ?rem2 (certainty (/ (- (* 100 (+ ?per1 ?per2))
-								(* ?per1 ?per2)) 100)))
-	)
+	(system (str-cat "CF.exe " ?per1 " " ?per2))
+	(modify ?rem2 (certainty (round (read-file-certainty))))
+)
 
 (defrule explain-diagnosis 
 	(declare (salience -100))
@@ -80,9 +78,4 @@
 	(printout t (str-cat "Diagnosi: " ?rel ) crlf)
 	(printout t (str-cat (str-cat "con certezza: " ?per1 )"%") crlf)
 	(ask-retract)
-	)	
-
-	
-	
-	
-	
+)	

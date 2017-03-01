@@ -1,3 +1,4 @@
+
 (deftemplate question
 	(slot symptom (default ?NONE))
 	(slot the-question (default ?NONE))
@@ -18,6 +19,7 @@
 	(slot value (type SYMBOL))
 	(slot certainty (default 100.0))
 	)
+	
 (deftemplate conversation 
 	(slot name)
 	(multislot values)

@@ -1,3 +1,4 @@
+
 (deffacts conversation
 	(conversation (name questions ))
 	(conversation (name answers ))
@@ -85,7 +86,7 @@
 	
 	(question 
 		(symptom inactivity-three-months)
-		(the-question "Non usi lo smartphone da piu' di tre mesi?")
+		(the-question "Usi lo smartphone da meno di tre mesi?")
 		(valid-answers yes no unknow why help)
 		(precursors battery is yes)
 		(exclusions not-charge job-oxidation)
@@ -446,3 +447,4 @@
 		(precursors display is yes and touch is yes)
 	)
 )
+

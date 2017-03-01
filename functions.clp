@@ -10,11 +10,20 @@
 	(open (str-cat ?diagn ".txt") File "r")
 	(bind ?readed (readline File))
 	(while (neq ?readed  EOF)
-	(printout t ?readed crlf)
-	(bind ?readed (readline File))
+		(printout t ?readed crlf)
+		(bind ?readed (readline File))
 	) 
-	(close File)
-	)
+		(close File)
+)
+	
+(deffunction read-file-certainty()
+	
+	(open "CF.txt" Cfile "r")
+	(bind ?readed (readline Cfile))
+	(close Cfile)
+	
+	(string-to-field ?readed)
+)
 
 (deffunction ctrl-question (?question $?allowed-values)
 	(printout t (str-cat ?question " "))
@@ -44,24 +53,6 @@
 	(return ?response)
 )
 
-(deffunction ask-it (?question ?why ?help)
-	(bind ?question (sym-cat ?question " (yes/no/why/help/unknow): "))
-	(bind ?response (ask-question ?question yes no why help unknow))
-	
-	(while (or (eq ?response help) (eq ?response why))
-		(if (eq ?response help)
-		then
-			(read-file (str-cat "help/" ?help))
-		else 
-			(read-file (str-cat "why/" ?why))
-		)
-		(bind ?response (ask-question ?question yes no why help unknow))
-	)
-	(if (eq ?response yes)
-		then YES
-	else (if (eq ?response no) then NO else UNKNOW)
-	)
-)
 	
 (deffunction get-all-facts-by-names ($?names)
 	(bind ?facts (create$))
@@ -71,35 +62,6 @@
 	(return ?facts))
 
 	
-
-(deffunction print-all-facts ()
-	(bind ?i 1)
-	(bind ?est NULL)
-	(progn$ (?f (get-all-facts-by-names diagnosis symptom))
-		
-		(if (and (eq (fact-relation ?f) symptom) (neq (fact-slot-value ?f established) NOYET))
-		then 
-			(bind ?est (fact-slot-value ?f established)) 
-			(printout t (str-cat (str-cat ?i "- ")  "Alla domanda: ") )
-			(read-file (str-cat "questions/" (fact-slot-value ?f name)))
-			(printout t (str-cat "hai risposto:" ?est) crlf)	
-		)
-		(bind ?i (+ ?i 1))
-	)
-	(return )
-)
-
-(deffunction gen-int-list (?n)
-	(bind ?list (create$))
-	(bind ?count 0)
-	(while (neq ?n ?count)
-		(bind ?list (create$ ?list (+ ?count 1)))
-		(bind ?count (+ ?count 1))
-	)
-	(return ?list)
-)
-
-
 (deffunction exclude-question ($?names)
 	(progn$ (?f (get-all-facts-by-names question))
 		(if (and (member$ (fact-slot-value ?f symptom) $?names) (eq (fact-slot-value ?f already-asked) FALSE))
@@ -112,15 +74,6 @@
 		(if (and (member$ (fact-slot-value ?f name) $?names) (eq (fact-slot-value ?f state) FALSE))
 			then (modify ?f (state DONE))))
 	(return )
-)
-
-
-(deffunction get-answer-by-question (?name)
-	(progn$ (?f (get-all-facts-by-names question))
-		(if (eq (fact-slot-value ?f name) ?name) then
-			(return (fact-slot-value ?f answer))
-		)
-	)
 )
 
 (deffunction print-all-question (?q ?a ?s)
@@ -137,11 +90,10 @@
 	(return )	
 )
 
-
-
 (deffunction ask-retract ()
 	(printout t "Vuoi cambiare qualcosa dei fatti osservati? yes no" crlf)
 	(bind ?answer (read))
+	
 	(if (eq ?answer no) then (return))
 	(if (neq ?answer yes) then (return))
 	(bind ?list (get-all-facts-by-names conversation))
@@ -156,7 +108,6 @@
 	(printout t "quale fatto vuoi cambiare? ")
 	(bind ?from (read))
 	(reset)
-	
 	
 	;risponde in automatico alle domande fino a quella precedente alla modifica
 	(bind ?all-fact (get-all-facts-by-names question))
