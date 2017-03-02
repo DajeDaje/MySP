@@ -14,7 +14,8 @@
 			(the-question ?the-question)
 			(symptom ?the-symptom)
 			(valid-answers $?valid-answers)
-			(exclusions $?exclusions))
+			(exclusions $?exclusions)
+			(no-exclusions $?no-exclusions))
 			
 	?a <- (conversation (name answers) (values $?answers))
 	?q <- (conversation (name questions) (values $?questions))
@@ -23,6 +24,7 @@
 		(modify ?f (already-asked TRUE))
 		(bind ?r (ask-question ?the-question ?the-symptom ?valid-answers))
 		(if (eq ?r si) then (exclude-question ?exclusions))
+		(if (eq ?r no) then (exclude-question ?no-exclusions))
 		(assert (symptom (name ?the-symptom) (value ?r)))
 		(retract ?a ?q ?s)
 		(assert (conversation (name questions) (values ?questions ?the-question)))

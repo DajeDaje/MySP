@@ -437,3 +437,63 @@
 	)
 )
 
+
+
+
+
+
+
+;;DOMANDE HC
+
+(deffacts questionHC
+	(question 
+		(symptom HC1)
+		(the-question "Ha mai installato un launcher su questo smartphone?")
+		(valid-answers si no nonso)
+		(precursors )
+		(no-exclusions launcher)
+	)
+	
+	(question 
+		(symptom HC2)
+		(the-question "Effettua spesso ricariche telefoniche?")
+		(valid-answers si no nonso)
+		(precursors )
+		(exclusions inactivity-three-months deactive-sim)
+	)
+	
+	(question 
+		(symptom HC3)
+		(the-question "Esegue periodicamente la formattazione al suo smartphone?")
+		(valid-answers si no nonso)
+		(precursors )
+		(exclusions less-memory-200MB slow-application)
+	)
+	
+	(question 
+		(symptom HC4)
+		(the-question "Ti e' mai caduto lo smartphone?")
+		(valid-answers si no nonso)
+		(precursors )
+		(no-exclusions phisic-button broken-display disconnected-plug)
+	)
+)
+
+(deffacts questionHC-rule   
+	(rule (if HC1 is no)
+		  (then launcher is false with certainty 60)
+	)
+	
+	(rule (if HC2 is si)
+		  (then inactivity-three-months is false with certainty 50 and deactive-sim is false with certainty 90)
+	)
+	
+	(rule (if HC3 is si)
+		  (then less-memory-200MB is false with certainty 40 and slow-application is false with certainty 30)
+	)
+	
+	(rule (if HC4 is no)
+		  (then phisic-button is false with certainty 50 and broken-display is false with certainty 30 and disconnected-plug is false with certainty 60)
+	)
+
+)

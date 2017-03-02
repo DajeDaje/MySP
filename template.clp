@@ -6,6 +6,7 @@
 	(slot already-asked (default FALSE))
 	(multislot precursors (default ?DERIVE))
 	(multislot exclusions)
+	(multislot no-exclusions)
 	)
 
 (deftemplate symptom
