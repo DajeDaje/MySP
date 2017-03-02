@@ -1,0 +1,2 @@
+non sono in grado di capire se la memoria interna disponibile al 
+momento sia inferiore a 200MB

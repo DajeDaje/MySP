@@ -1,0 +1,2 @@
+non sono in grado di capire se ha RAM sufficiente per supportare 
+vari processi attivi simultaneamente.
