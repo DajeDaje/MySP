@@ -21,7 +21,7 @@
 	=>
 		(modify ?f (already-asked TRUE))
 		(bind ?r (ask-question ?the-question ?the-symptom ?valid-answers))
-		(if (eq ?r yes) then (exclude-question ?exclusions))
+		(if (eq ?r si) then (exclude-question ?exclusions))
 		(assert (symptom (name ?the-symptom) (value ?r)))
 		(retract ?a ?q ?s)
 		(assert (conversation (name questions) (values ?questions ?the-question)))
@@ -31,7 +31,7 @@
 
 (defrule precursor-is-satisfaied
 	?f <- (question (already-asked FALSE) (precursors ?name is ?value $?rest))
-	(symptom (name ?name) (value ?value))
+	(symptom (name ?name) (value ?value | nonso))
 	=>
 	(if (eq (nth 1 ?rest) and) then (modify ?f (precursors (rest$ ?rest)))
 		else (modify ?f (precursors ?rest)))
@@ -42,7 +42,7 @@
 	?f <- (rule (certainty ?c1)
 		(if ?symptom is ?value $?rest))
 		(symptom (name ?symptom)
-					(value ?value)
+					(value ?value | nonso)
 					(certainty ?c2))
 	=>
 	(modify ?f (certainty (min ?c1 ?c2)) (if (rest$ ?rest)))
@@ -68,7 +68,7 @@
 	=>
 	(retract ?rem1)
 	(system (str-cat "CF.exe " ?per1 " " ?per2))
-	(modify ?rem2 (certainty (round (read-file-certainty))))
+	(modify ?rem2 (certainty (read-file-certainty)))
 )
 
 (defrule explain-diagnosis 
@@ -77,5 +77,14 @@
 	=>
 	(printout t (str-cat "Diagnosi: " ?rel ) crlf)
 	(printout t (str-cat (str-cat "con certezza: " ?per1 )"%") crlf)
-	(ask-retract)
+	(if (= 0 (length$ (get-all-facts-by-names retraction))) then (assert (retraction)))
 )	
+
+
+(defrule retraction
+	(declare (salience -101))
+	?r <- (retraction)
+	=>
+	(retract ?r)
+	(ask-retract)
+)
