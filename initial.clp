@@ -47,7 +47,7 @@
 (deffacts battery-question
 	(question 
 		(symptom battery)
-		(the-question "Hai problemi relativi alla batteria?")
+		(the-question "Ha problemi relativi alla batteria?")
 		(valid-answers si no nonso perche aiuto)
 		(exclusions calls slowness microsd display)
 	)
@@ -94,7 +94,7 @@
 	
 	(question 
 		(symptom not-charge)
-		(the-question "Hai problemi nel caricare lo smartphone?")
+		(the-question "Ha problemi nel caricare lo smartphone?")
 		(valid-answers si no nonso perche aiuto)
 		(precursors battery is si)
 		(exclusions battery-drain deformed-cover infalted-battery overheat-smartphone inactivity-three-months job-oxidation)
@@ -118,7 +118,7 @@
 	
 	(question 
 		(symptom job-oxidation)
-		(the-question "Lavori o vivi in ambienti umidi?")
+		(the-question "Lavora o vive in ambienti umidi?")
 		(valid-answers si no nonso perche aiuto)
 		(precursors battery is si)
 	)
@@ -183,14 +183,14 @@
 (deffacts call-question
 	(question 
 		(symptom calls)
-		(the-question "Riscontri problemi durante le chiamate?")
+		(the-question "Riscontra problemi durante le chiamate?")
 		(valid-answers si no nonso perche aiuto)
 		(exclusions battery slowness microsd display)
 	)
 
 	(question 
 		(symptom sim)
-		(the-question "Hai problemi relativi alla sim?")
+		(the-question "Ha problemi relativi alla sim?")
 		(valid-answers si no nonso perche aiuto)
 		(precursors calls is si)
 		(exclusions microphone speakerphone)
@@ -198,7 +198,7 @@
 	
 	(question 
 		(symptom reload-more-years)
-		(the-question "La tua ultima ricarica telefonica risale a più di un anno fa?")
+		(the-question "La sua ultima ricarica telefonica risale a più di un anno fa?")
 		(valid-answers si no nonso perche aiuto)
 		(precursors calls is si and sim is si)
 		(exclusions aereo-mode-on other-sim-active)
@@ -206,7 +206,7 @@
 	
 	(question 
 		(symptom aereo-mode-on)
-		(the-question "E' presente l'icona della modalità aereo(icona aereoplano)?")
+		(the-question "E' presente l'icona della modalità aereo (icona aereoplano)?")
 		(valid-answers si no nonso perche aiuto)
 		(precursors calls is si and sim is si)
 		(exclusions reload-more-years other-sim-active)
@@ -221,7 +221,7 @@
 
 	(question 
 		(symptom microphone)
-		(the-question "Hai problemi relativi al microfono?")
+		(the-question "Ha problemi relativi al microfono?")
 		(valid-answers si no nonso perche aiuto)
 		(precursors calls is si)
 		(exclusions sim speakerphone)
@@ -229,7 +229,7 @@
 	
 	(question 
 		(symptom speakerphone)
-		(the-question "Durante le chiamate hai difficolta' nel sentire la voce del tuo interlocutore?")
+		(the-question "Durante le chiamate ha difficolta' nel sentire la voce del suo interlocutore?")
 		(valid-answers si no nonso perche aiuto)
 		(precursors calls is si)
 		(exclusions microphone sim)
@@ -253,7 +253,7 @@
 
 	(question 
 		(symptom low-signal)
-		(the-question "Risocontri frequentemente problemi di linea?")
+		(the-question "Riscontra frequentemente problemi di linea?")
 		(valid-answers si no nonso perche aiuto)
 		(precursors calls is si and microphone is si)
 		(exclusions earphone-active interlocutor-cant-hear)
@@ -261,14 +261,14 @@
 
 	(question 
 		(symptom interlocutor-cant-hear)
-		(the-question "Durante le chiamate il tuo interlocutore riesce a sentire la tua voce col vivavoce attivo?")
+		(the-question "Durante le chiamate il suo interlocutore riesce a sentire la sua voce col vivavoce attivo?")
 		(valid-answers si no nonso perche aiuto)
 		(precursors calls is si and microphone is si and earphone-active is no and low-signal is no)
 	)
 
 	(question 
 		(symptom volume-off)
-		(the-question "Hai il volume relativo all'audio disattivato?")
+		(the-question "Ha il volume relativo all'audio disattivato?")
 		(valid-answers si no nonso perche aiuto)
 		(precursors calls is si and speakerphone is si)
 		(exclusions earphone-active)
@@ -276,7 +276,7 @@
 
 	(question 
 		(symptom speaker)
-		(the-question "Se attivi il vivavoce riesci a sentire il tuo interlocutore?")
+		(the-question "Se attiva il vivavoce riesce a sentire il suo interlocutore?")
 		(valid-answers si no nonso perche aiuto)
 		(precursors calls is si and speakerphone is si and earphone-active is no and volume-off is no)
 		(exclusions )
@@ -303,14 +303,14 @@
 (deffacts memory-questions
 	(question 
 		(symptom slowness)
-		(the-question "Il tuo smartphone e' lento?")
+		(the-question "Il suo smartphone e' lento?")
 		(valid-answers si no nonso perche aiuto)
 		(exclusions calls battery microsd display)
 	)
 	
 	(question 
 		(symptom slow-application)
-		(the-question "Per caso e' lenta un'applicazione?")
+		(the-question "Per caso e' lenta un'applicazione del suo smartphone?")
 		(valid-answers si no nonso perche aiuto)
 		(precursors slowness is si)
 	)
@@ -350,7 +350,7 @@
 (deffacts microsd-questions
 	(question 
 		(symptom microsd)
-		(the-question "Hai problemi con la memoria esterna?")
+		(the-question "Ha problemi con la memoria esterna?")
 		(valid-answers si no nonso perche aiuto)
 		(exclusions slowness battery calls display)
 	)
@@ -365,7 +365,7 @@
 	
 	(question 
 		(symptom other-sd-recognized)
-		(the-question "Provando ad inserire altre microsd vengono riconosciute?")
+		(the-question "Provando ad inserire altre MicroSD, queste vengono riconosciute dal suo smartphone?")
 		(valid-answers si no nonso perche aiuto)
 		(precursors microsd is si and microsd-recognized is no)
 		(exclusions microsd-recognized)
@@ -391,14 +391,14 @@
 (deffacts display-questions
 	(question 
 		(symptom display)
-		(the-question "Hai problemi con il display o con alcuni tasti?")
+		(the-question "Ha problemi con il display o con alcuni tasti?")
 		(valid-answers si no nonso perche aiuto)
 		(exclusions slowness battery calls microsd)
 	)
 	
 	(question 
 		(symptom phisic-button)
-		(the-question "Hai qualche tasto danneggiato o malfunzionante?")
+		(the-question "Ha qualche tasto danneggiato o malfunzionante?")
 		(valid-answers si no nonso perche aiuto)
 		(exclusions touch)
 		(precursors display is si)
@@ -406,7 +406,7 @@
 	
 	(question 
 		(symptom touch)
-		(the-question "Il telefono non risponde ai comandi dallo schermo?")
+		(the-question "Il suo smartphone ha difficolta' nel rispondere ai suoi comandi sullo schermo?")
 		(valid-answers si no nonso perche aiuto)
 		(exclusions phisic-button)
 		(precursors display is si)
@@ -414,7 +414,7 @@
 	
 	(question 
 		(symptom total-touch)
-		(the-question "Hai difficolta' nello sblocco dello smartphone?")
+		(the-question "Ha difficolta' nello sbloccare lo smartphone?")
 		(valid-answers si no nonso perche aiuto)
 		(exclusions partial-touch)
 		(precursors display is si and touch is si)
@@ -422,7 +422,7 @@
 	
 	(question 
 		(symptom partial-touch)
-		(the-question "Hai difficolta', aprendo l'applicazione telefono, nel comporre il numero telefonico senza problemi?")
+		(the-question "Ha difficolta',nell'aprire l'applicazione telefono, per comporre un qualsiasi numero telefonico?")
 		(valid-answers si no nonso perche aiuto)
 		(exclusions partial-touch total-touch)
 		(precursors display is si and touch is si)
@@ -430,7 +430,7 @@
 	
 	(question 
 		(symptom partial-touch)
-		(the-question "Hai difficolta' ad aprire completamente il menu' a tendina?")
+		(the-question "Ha difficolta' nell'aprire completamente il menu' a tendina?")
 		(valid-answers si no nonso perche aiuto)
 		(exclusions partial-touch total-touch)
 		(precursors display is si and touch is si)
