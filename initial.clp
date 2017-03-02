@@ -62,7 +62,7 @@
 	
 	(question 
 		(symptom deformed-cover)
-		(the-question "La cover è deformata?")
+		(the-question "La cover e' deformata?")
 		(valid-answers si no nonso perche aiuto)
 		(precursors battery is si)
 		(exclusions not-charge job-oxidation)
@@ -70,7 +70,7 @@
 	
 	(question 
 		(symptom infalted-battery)
-		(the-question "La batteria è gonfia?")
+		(the-question "La batteria e' gonfia?")
 		(valid-answers si no nonso perche aiuto)
 		(precursors battery is si)
 		(exclusions not-charge job-oxidation)
@@ -187,8 +187,7 @@
 		(valid-answers si no nonso perche aiuto)
 		(exclusions battery slowness microsd display)
 	)
-	
-	;;SIM
+
 	(question 
 		(symptom sim)
 		(the-question "Hai problemi relativi alla sim?")
@@ -219,8 +218,7 @@
 		(valid-answers si no nonso perche aiuto)
 		(precursors calls is si and sim is si and reload-more-years is no and aereo-mode-on is no)
 	)
-	
-	;;MICROFONO E ALTOPARLANTE
+
 	(question 
 		(symptom microphone)
 		(the-question "Hai problemi relativi al microfono?")
@@ -231,14 +229,12 @@
 	
 	(question 
 		(symptom speakerphone)
-		(the-question "Durante le chiamate ha dificolta' nel sentire la voce del tuo interlocutore?")
+		(the-question "Durante le chiamate hai difficolta' nel sentire la voce del tuo interlocutore?")
 		(valid-answers si no nonso perche aiuto)
 		(precursors calls is si)
 		(exclusions microphone sim)
 	)
-	
-	
-	;;ENTRAMBE
+
 	(question 
 		(symptom earphone-active)
 		(the-question "E' presente l'icona delle cuffie, pur non avendole collegate?")
@@ -254,9 +250,7 @@
 		(precursors calls is si and speakerphone is si)
 		(exclusions low-signal interlocutor-cant-hear)
 	)
-	
-	
-	;SOLO M
+
 	(question 
 		(symptom low-signal)
 		(the-question "Risocontri frequentemente problemi di linea?")
@@ -264,17 +258,14 @@
 		(precursors calls is si and microphone is si)
 		(exclusions earphone-active interlocutor-cant-hear)
 	)
-	
-	;SOLO M
+
 	(question 
 		(symptom interlocutor-cant-hear)
 		(the-question "Durante le chiamate il tuo interlocutore riesce a sentire la tua voce col vivavoce attivo?")
 		(valid-answers si no nonso perche aiuto)
 		(precursors calls is si and microphone is si and earphone-active is no and low-signal is no)
 	)
-	
 
-	;SOLO A
 	(question 
 		(symptom volume-off)
 		(the-question "Hai il volume relativo all'audio disattivato?")
@@ -282,8 +273,7 @@
 		(precursors calls is si and speakerphone is si)
 		(exclusions earphone-active)
 	)	
-	
-	;SOLO A
+
 	(question 
 		(symptom speaker)
 		(the-question "Se attivi il vivavoce riesci a sentire il tuo interlocutore?")
@@ -424,16 +414,15 @@
 	
 	(question 
 		(symptom total-touch)
-		(the-question "Non riesci a sbloccare il telefono?")
+		(the-question "Hai difficolta' nello sblocco dello smartphone?")
 		(valid-answers si no nonso perche aiuto)
 		(exclusions partial-touch)
 		(precursors display is si and touch is si)
 	)
 	
-	
 	(question 
 		(symptom partial-touch)
-		(the-question "Aprendo l'applicazione telefono non riesci a comporre il numero senza problemi?")
+		(the-question "Hai difficolta', aprendo l'applicazione telefono, nel comporre il numero telefonico senza problemi?")
 		(valid-answers si no nonso perche aiuto)
 		(exclusions partial-touch total-touch)
 		(precursors display is si and touch is si)
@@ -441,7 +430,7 @@
 	
 	(question 
 		(symptom partial-touch)
-		(the-question "Non riesci ad aprire completamente il menu' a tendina?")
+		(the-question "Hai difficolta' ad aprire completamente il menu' a tendina?")
 		(valid-answers si no nonso perche aiuto)
 		(exclusions partial-touch total-touch)
 		(precursors display is si and touch is si)
