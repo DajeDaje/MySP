@@ -1,3 +1,4 @@
+
 (deffunction seed-time ()
 	(open "time.txt" mytime "r")
 	(bind ?a (string-to-field (sub-string 11 11 (read mytime))))
