@@ -1,0 +1,1 @@
+la memoria interna disponibile al momento sia superiore a 200MB
