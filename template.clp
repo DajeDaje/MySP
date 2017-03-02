@@ -1,4 +1,3 @@
-
 (deftemplate question
 	(slot symptom (default ?NONE))
 	(slot the-question (default ?NONE))

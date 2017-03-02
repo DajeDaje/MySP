@@ -15,13 +15,34 @@
 	) 
 		(close File)
 )
+
+(deffunction get-all-facts-by-names ($?names)
+	(bind ?facts (create$))
+	(progn$ (?f (get-fact-list))
+		(if (member$ (fact-relation ?f) $?names)
+			then (bind ?facts (create$ ?facts ?f))))
+	(return ?facts))
+
+(deffunction print-all-question (?q ?a ?s)
+	(bind ?cont 1)
+	(progn$ (?question ?q)
+		(printout t (str-cat ?cont ") Alla domanda: "))
+		(printout t ?question crlf)
+		(printout t "   hai risposto: ")
+		(printout t (nth ?cont ?a) crlf)
+		(printout t "   questo mi ha portato a pensare che ")
+		;(printout t (nth ?cont ?s) crlf crlf)
+		(read-file (str-cat "symptoms/" (nth ?cont ?s)))
+		(bind ?cont (+ ?cont 1))
+	)
+	(return )	
+)
 	
-(deffunction read-file-certainty()
 	
+(deffunction read-file-certainty ()
 	(open "CF.txt" Cfile "r")
 	(bind ?readed (readline Cfile))
 	(close Cfile)
-	
 	(string-to-field ?readed)
 )
 
@@ -39,27 +60,27 @@
 	?answer)
 
 (deffunction ask-question (?question ?symptom $?allowed-values)
+	(printout t crlf)
 	(bind ?response (ctrl-question ?question $?allowed-values))
-	
-	(while (or (eq ?response help) (eq ?response why))
-		(if (eq ?response help)
+	(while (or (eq ?response aiuto) (eq ?response perche))
+		(if (eq ?response aiuto)
 		then
 			(read-file (str-cat "help/" ?symptom))
 		else 
+			(bind ?list (get-all-facts-by-names conversation))
+			(bind ?fq (nth 1 ?list)) ;prelevo i fatti questions, answers, symptoms dalla lista dei fatti di tipo conversation
+			(bind ?fa (nth 2 ?list))
+			(bind ?fs (nth 3 ?list))
+			(bind ?q (fact-slot-value ?fq values)) ;prelevo le liste di domande risposte e sintomi dai fatti
+			(bind ?a (fact-slot-value ?fa values))
+			(bind ?s (fact-slot-value ?fs values))
+			(print-all-question ?q ?a ?s)
 			(read-file (str-cat "why/" ?symptom))
 		)
 		(bind ?response (ctrl-question ?question $?allowed-values))
 	)
 	(return ?response)
 )
-
-	
-(deffunction get-all-facts-by-names ($?names)
-	(bind ?facts (create$))
-	(progn$ (?f (get-fact-list))
-		(if (member$ (fact-relation ?f) $?names)
-			then (bind ?facts (create$ ?facts ?f))))
-	(return ?facts))
 
 	
 (deffunction exclude-question ($?names)
@@ -76,26 +97,14 @@
 	(return )
 )
 
-(deffunction print-all-question (?q ?a ?s)
-	(bind ?cont 1)
-	(progn$ (?question ?q)
-		(printout t (str-cat ?cont ") Alla domanda: "))
-		(printout t ?question crlf)
-		(printout t "hai risposto: ")
-		(printout t (nth ?cont ?a) crlf)
-		(printout t "ed ha portato al sintomo: ")
-		(printout t (nth ?cont ?s) crlf)
-		(bind ?cont (+ ?cont 1))
-	)
-	(return )	
-)
+
 
 (deffunction ask-retract ()
-	(printout t "Vuoi cambiare qualcosa dei fatti osservati? yes no" crlf)
+	(printout t "Vuoi cambiare qualcosa dei fatti osservati? si no" crlf)
 	(bind ?answer (read))
 	
 	(if (eq ?answer no) then (return))
-	(if (neq ?answer yes) then (return))
+	(if (neq ?answer si) then (return))
 	(bind ?list (get-all-facts-by-names conversation))
 	(bind ?fq (nth 1 ?list)) ;prelevo i fatti questions, answers, symptoms dalla lista dei fatti di tipo conversation
 	(bind ?fa (nth 2 ?list))
@@ -119,7 +128,7 @@
 		(progn$ (?fact ?all-fact)
 			(if (eq (nth ?count ?s) (fact-slot-value ?fact symptom)) then
 				(printout t (fact-slot-value ?fact symptom) crlf)
-				(if (eq (nth ?count ?a) yes) then (exclude-question (fact-slot-value ?fact exclusions)))
+				(if (eq (nth ?count ?a) si) then (exclude-question (fact-slot-value ?fact exclusions)))
 				(printout t (fact-slot-value ?fact exclusions) crlf)
 				(modify ?fact (already-asked TRUE))
 				(assert (symptom (name (nth ?count ?s)) (value (nth ?count ?a))))
