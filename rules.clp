@@ -6,6 +6,7 @@
 	(set-fact-duplication TRUE))
 
 ;; QUESTIONS
+
 (defrule ask-a-question
 	?f <- (question 
 			(already-asked FALSE)
