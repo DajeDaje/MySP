@@ -1,6 +1,12 @@
-1- why, help
+1- help
 2- aggiungere cartella con scritti i sintomi in maniera più chiara
 3- aggiunta di moduli di disambiguazione
 4- riformulare domande
-5 - fare il modulo del why per stampa
-fare i due prototipi (uno con tutte le nuove modifiche e l'altro con il nuovo metodo di help)
+5- fare il modulo del why per stampa
+6- soluzione
+
+Fixed :
+1- why
+2- aggiunti moduli cartelle sintomi in maniera piu chiara
+4- riformulare domande
+5- stampa why con spiegazione

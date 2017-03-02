@@ -75,7 +75,8 @@
 	(declare (salience -100))
 	(diagnosis (name ?rel) (value ?) (certainty ?per1))
 	=>
-	(printout t (str-cat "Diagnosi: " ?rel ) crlf)
+	(printout t "Diagnosi: ")
+	(read-file (str-cat "diagnosis/" ?rel))
 	(printout t (str-cat (str-cat "con certezza: " ?per1 )"%") crlf)
 	(if (= 0 (length$ (get-all-facts-by-names retraction))) then (assert (retraction)))
 )	
