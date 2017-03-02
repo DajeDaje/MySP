@@ -86,7 +86,7 @@
 	
 	(question 
 		(symptom inactivity-three-months)
-		(the-question "Usi lo smartphone da meno di tre mesi?")
+		(the-question "Lo smartphone e' inutilizzato da piu' di tre mesi?")
 		(valid-answers si no nonso perche aiuto)
 		(precursors battery is si)
 		(exclusions not-charge job-oxidation)
@@ -113,7 +113,7 @@
 		(the-question "Cambiando il cavo del caricatore, lo smartphone carica correttamente?")
 		(valid-answers si no nonso perche aiuto)
 		(precursors battery is si and not-charge is si)
-		(exclusions cable)
+		(exclusions power-supply)
 	)
 	
 	(question 
