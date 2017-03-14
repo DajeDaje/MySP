@@ -1,5 +1,6 @@
 
 (deftemplate question
+	(slot user-question (default FALSE))
 	(slot symptom (default ?NONE))
 	(slot the-question (default ?NONE))
 	(multislot valid-answers (default ?NONE))
@@ -28,6 +29,7 @@
 	
 (deftemplate rule
 	(slot certainty (default 100.0))
+	(slot assertion)
 	(multislot if)
 	(multislot then)
 )

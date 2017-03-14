@@ -1,6 +1,14 @@
-1- why, help
-2- aggiungere cartella con scritti i sintomi in maniera più chiara
-3- aggiunta di moduli di disambiguazione
-4- riformulare domande
-5 - fare il modulo del why per stampa
+1- help
+2- aggiunta di moduli di disambiguazione
+
+
 fare i due prototipi (uno con tutte le nuove modifiche e l'altro con il nuovo metodo di help)
+
+
+
+l'help va fatto mettendo altre domande, oppure aprendo un 
+	semplice file di aiuto?
+per la profilazione utente fare domande più particolari per 
+	utenti esperti oltre che assumere per vero alcuni sintomi
+la soluzione e' la stessa per tutti glo utenti, ma cambiera' la spiegazione 
+	in base alle domande a cui hanno risposto
