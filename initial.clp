@@ -6,39 +6,39 @@
 )
 
 (deffacts battery-rules 
-	(rule (if battery is si and battery-drain is si)
+	(rule (assertion diagnosis)(if battery is si and battery-drain is si)
 		  (then damaged-battery is true with certainty 70)
 	)
 	
-	(rule (if battery is si and deformed-cover is si)
+	(rule (assertion diagnosis)(if battery is si and deformed-cover is si)
 		  (then damaged-battery is true with certainty 20)
 	)
 	
-	(rule (if battery is si and infalted-battery is si)
+	(rule (assertion diagnosis)(if battery is si and infalted-battery is si)
 		  (then damaged-battery is true with certainty 30)
 	)
 	
-	(rule (if battery is si and overheat-smartphone is si)
+	(rule (assertion diagnosis)(if battery is si and overheat-smartphone is si)
 		  (then damaged-battery is true with certainty 40)
 	)
 	
-	(rule (if battery is si and inactivity-three-months is si)
+	(rule (assertion diagnosis)(if battery is si and inactivity-three-months is si)
 		  (then damaged-battery is true with certainty 5)
 	)
 	
-	(rule (if battery is si and not-charge is si and power-supply is si)
+	(rule (assertion diagnosis)(if battery is si and not-charge is si and power-supply is si)
 		  (then damaged-charger is true with certainty 10)
 	)
 	
-	(rule (if battery is si and not-charge is si and cable is si)
+	(rule (assertion diagnosis)(if battery is si and not-charge is si and cable is si)
 		  (then damaged-cable is true with certainty 60)
 	)
 	
-	(rule (if battery is si and not-charge is si and power-supply is no and cable is no)
+	(rule (assertion diagnosis)(if battery is si and not-charge is si and power-supply is no and cable is no)
 		  (then damaged-connector is true with certainty 55)
 	)
 	
-	(rule (if battery is si and job-oxidation is si and green-pin is si)
+	(rule (assertion diagnosis)(if battery is si and job-oxidation is si and green-pin is si)
 		  (then damaged-battery-pin is true with certainty 10)
 	)
 )
@@ -49,7 +49,8 @@
 		(symptom battery)
 		(the-question "Ha problemi relativi alla batteria?")
 		(valid-answers si no nonso perche aiuto)
-		(exclusions calls slowness microsd display)
+		(exclusions calls slowness microsd 
+)
 	)
 	
 	(question 
@@ -135,47 +136,47 @@
 
 
 (deffacts call-rules 
-	(rule (if calls is si and sim is si and reload-more-years is si)
+	(rule (assertion diagnosis)(if calls is si and sim is si and reload-more-years is si)
 		  (then deactive-sim is true with certainty 30)
 	)
 	
-	(rule (if calls is si and sim is si and aereo-mode-on is si)
+	(rule (assertion diagnosis)(if calls is si and sim is si and aereo-mode-on is si)
 		  (then aereo-mode is true with certainty 90)
 	)
 	
-	(rule (if calls is si and sim is si and aereo-mode-on is no and reload-more-years is no and other-sim-active is no)
+	(rule (assertion diagnosis)(if calls is si and sim is si and aereo-mode-on is no and reload-more-years is no and other-sim-active is no)
 		  (then damaged-slot-sim is true with certainty 90)
 	)
 	
-	(rule (if calls is si and sim is si and aereo-mode-on is no and reload-more-years is no and other-sim-active is si)
+	(rule (assertion diagnosis)(if calls is si and sim is si and aereo-mode-on is no and reload-more-years is no and other-sim-active is si)
 		  (then damaged-sim is true with certainty 85)
 	)
 	
-	(rule (if calls is si and microphone is si and earphone-active is si)
+	(rule (assertion diagnosis)(if calls is si and microphone is si and earphone-active is si)
 		  (then damaged-jack is true with certainty 45)
 	)
 	
-	(rule (if calls is si and microphone is si and low-signal is si)
+	(rule (assertion diagnosis)(if calls is si and microphone is si and low-signal is si)
 		  (then provider-problem is true with certainty 70)
 	)
 	
-	(rule (if calls is si and microphone is si and low-signal is no and earphone-active is no and interlocutor-cant-hear is si)
+	(rule (assertion diagnosis)(if calls is si and microphone is si and low-signal is no and earphone-active is no and interlocutor-cant-hear is si)
 		  (then damaged-microphone is true with certainty 80)
 	)
 	
-	(rule (if calls is si and speakerphone is si and earphone-active is si)
+	(rule (assertion diagnosis)(if calls is si and speakerphone is si and earphone-active is si)
 		  (then damaged-jack is true with certainty 80)
 	)
 	
-	(rule (if calls is si and speakerphone is si and volume-off is si)
+	(rule (assertion diagnosis)(if calls is si and speakerphone is si and volume-off is si)
 		  (then sound-off is true with certainty 90)
 	)
 	
-	(rule (if calls is si and speakerphone is si and volume-off is no and earphone-active is no and speaker is no)
+	(rule (assertion diagnosis)(if calls is si and speakerphone is si and volume-off is no and earphone-active is no and speaker is no)
 		  (then damaged-speaker is true with certainty 70)
 	)
 	
-	(rule (if calls is si and speakerphone is si and volume-off is no and earphone-active is no and speaker is si)
+	(rule (assertion diagnosis)(if calls is si and speakerphone is si and volume-off is no and earphone-active is no and speaker is si)
 		  (then damaged-callspeaker is true with certainty 55)
 	)
 )
@@ -211,7 +212,7 @@
 		(precursors calls is si and sim is si)
 		(exclusions reload-more-years other-sim-active)
 	)
-	
+
 	(question 
 		(symptom other-sim-active)
 		(the-question "Lo smartphone legge altre sim?")
@@ -286,15 +287,15 @@
 
 
 (deffacts memory-rules
-	(rule (if slowness is si and slow-application is si)
+	(rule (assertion diagnosis)(if slowness is si and slow-application is si)
 		  (then busy-cache is true with certainty 30)
 	)
 	
-	(rule (if slowness is si and slow-application is no and less-ram-1GB is si)
+	(rule (assertion diagnosis)(if slowness is si and slow-application is no and less-ram-1GB is si)
 		  (then busy-ram is true with certainty 30)
 	)
 	
-	(rule (if slowness is si and slow-application is no and less-memory-200MB is si)
+	(rule (assertion diagnosis)(if slowness is si and slow-application is no and less-memory-200MB is si)
 		  (then busy-memory is true with certainty 30)
 	)
 
@@ -334,15 +335,15 @@
 
 
 (deffacts microsd-rules
-	(rule (if microsd is si and microsd-recognized is si)
+	(rule (assertion diagnosis)(if microsd is si and microsd-recognized is si)
 		  (then unmountable-sd is true with certainty 30)
 	)
 	
-	(rule (if microsd is si and microsd-recognized is no and other-sd-recognized is si)
+	(rule (assertion diagnosis)(if microsd is si and microsd-recognized is no and other-sd-recognized is si)
 		  (then damaged-sd is true with certainty 30)
 	)
 	
-	(rule (if microsd is si and microsd-recognized is no and other-sd-recognized is no)
+	(rule (assertion diagnosis)(if microsd is si and microsd-recognized is no and other-sd-recognized is no)
 		  (then damaged-slot-sd is true with certainty 30)
 	)
 )
@@ -375,15 +376,15 @@
 
 
 (deffacts display-rules
-	(rule (if display is si and phisic-button is si)
+	(rule (assertion diagnosis)(if display is si and phisic-button is si)
 		  (then buttons is true with certainty 100)
 	)
 	
-	(rule (if display is si and touch is si and total-touch is si)
+	(rule (assertion diagnosis)(if display is si and touch is si and total-touch is si)
 		  (then broken-display is true with certainty 70 and disconnected-plug is true with certainty 30)
 	)
 	
-	(rule (if display is si and touch is si and partial-touch is si)
+	(rule (assertion diagnosis)(if display is si and touch is si and partial-touch is si)
 		  (then broken-display is true with certainty 80 and launcher is true with certainty 10)
 	)
 )
@@ -422,7 +423,7 @@
 	
 	(question 
 		(symptom partial-touch)
-		(the-question "Ha difficolta',nell'aprire l'applicazione telefono, per comporre un qualsiasi numero telefonico?")
+		(the-question "Ha difficolta',nell'aprire l'applicazione telefono, a comporre un qualsiasi numero telefonico?")
 		(valid-answers si no nonso perche aiuto)
 		(exclusions partial-touch total-touch)
 		(precursors display is si and touch is si)
@@ -437,16 +438,11 @@
 	)
 )
 
-
-
-
-
-
-
 ;;DOMANDE HC
 
 (deffacts questionHC
 	(question 
+		(user-question TRUE)
 		(symptom HC1)
 		(the-question "Ha mai installato un launcher su questo smartphone?")
 		(valid-answers si no nonso)
@@ -455,6 +451,7 @@
 	)
 	
 	(question 
+		(user-question TRUE)
 		(symptom HC2)
 		(the-question "Effettua spesso ricariche telefoniche?")
 		(valid-answers si no nonso)
@@ -463,6 +460,7 @@
 	)
 	
 	(question 
+		(user-question TRUE)
 		(symptom HC3)
 		(the-question "Esegue periodicamente la formattazione al suo smartphone?")
 		(valid-answers si no nonso)
@@ -470,7 +468,8 @@
 		(exclusions less-memory-200MB slow-application)
 	)
 	
-	(question 
+	(question
+		(user-question TRUE)
 		(symptom HC4)
 		(the-question "Ti e' mai caduto lo smartphone?")
 		(valid-answers si no nonso)
@@ -480,20 +479,21 @@
 )
 
 (deffacts questionHC-rule   
-	(rule (if HC1 is no)
-		  (then launcher is false with certainty 60)
+	(rule (assertion symptom)
+	
+	(if HC1 is no)
+		  (then launcher is no with certainty 60)
 	)
 	
-	(rule (if HC2 is si)
-		  (then inactivity-three-months is false with certainty 50 and deactive-sim is false with certainty 90)
+	(rule (assertion symptom)(if HC2 is si)
+		  (then inactivity-three-months is no with certainty 50 and deactive-sim is no with certainty 90)
 	)
 	
-	(rule (if HC3 is si)
-		  (then less-memory-200MB is false with certainty 40 and slow-application is false with certainty 30)
+	(rule (assertion symptom)(if HC3 is si)
+		  (then less-memory-200MB is no with certainty 40 and slow-application is no with certainty 30)
 	)
 	
-	(rule (if HC4 is no)
-		  (then phisic-button is false with certainty 50 and broken-display is false with certainty 30 and disconnected-plug is false with certainty 60)
+	(rule (assertion symptom)(if HC4 is no)
+		  (then phisic-button is no with certainty 50 and broken-display is no with certainty 30 and disconnected-plug is no with certainty 60)
 	)
-
 )

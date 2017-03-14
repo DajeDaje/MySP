@@ -48,9 +48,10 @@
 	(string-to-field ?readed)
 )
 
-(deffunction ctrl-question (?question $?allowed-values)
+(deffunction ctrl-question (?question ?symptom $?allowed-values)
 	(printout t (str-cat ?question " "))
 	(printout t ?allowed-values crlf)
+	(system (str-cat "java -jar voice.jar audio/" ?symptom ".wav"))
 	(bind ?answer (read))
 	(if (lexemep ?answer) ;; TRUE is ?answer is a STRING or SYMBOL
 		then (bind ?answer (lowcase ?answer)))
@@ -63,7 +64,7 @@
 
 (deffunction ask-question (?question ?symptom $?allowed-values)
 	(printout t crlf)
-	(bind ?response (ctrl-question ?question $?allowed-values))
+	(bind ?response (ctrl-question ?question ?symptom $?allowed-values))
 	(while (or (eq ?response aiuto) (eq ?response perche))
 		(if (eq ?response aiuto)
 		then
@@ -79,7 +80,7 @@
 			(print-all-question ?q ?a ?s)
 			(read-file (str-cat "why/" ?symptom))
 		)
-		(bind ?response (ctrl-question ?question $?allowed-values))
+		(bind ?response (ctrl-question ?question ?symptom $?allowed-values))
 	)
 	(return ?response)
 )
