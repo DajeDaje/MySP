@@ -1,0 +1,4 @@
+collegando delle cuffie(auricolari) al telefono, dovrebbe 
+apparire un icona di alcune cuffie sulla parte superiore dello 
+schermo. Se non ha collegato alcune cuffie, ma viene mostrato 
+ugualmente un'icona delle cuffie, risponda si

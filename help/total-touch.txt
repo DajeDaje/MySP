@@ -1,0 +1,3 @@
+Se una volta avviato il telefono, non riesce a sbloccarlo, per 
+delle difficolta' dovute al touch(trascinamento a tratti, punti non
+riconosciuti...), allora risponda si.

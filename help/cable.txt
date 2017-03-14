@@ -1,0 +1,5 @@
+il caricatore del telefono e' solitamente composto da due 
+componenti: il trasformatore e il cavo.
+Provi ad utilizzare un cavo con lo stesso ingresso usb insieme al
+suo trasformatore originale, e mi dica se adesso carica 
+correttammente?

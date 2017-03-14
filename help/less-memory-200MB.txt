@@ -1,0 +1,10 @@
+per vedere la memoria interna bisogna sbloccare il telefono, 
+successivamente andare nelle impostazioni e a seconda del vostro 
+modello di smartphone e sistema operativo, sara' presente una 
+voce simile ad 'Archiviazione' o 'Memoria'.
+Selezionatela e all'interno saranno presenti diverse informazioni
+rapprensentanti la memoria del dispositivo, come la memoria totale,
+ quella occupata e quella disponibile.
+Se la memoria disponibile e' inferiore a 200MB o comunque inferiore
+ al 10 per cento risponda si.
+(NB: non confondere la memoria del dispositivo con la memoria RAM)

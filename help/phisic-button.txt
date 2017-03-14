@@ -1,0 +1,9 @@
+Solitamente tutti gli smartphone hanno almeno 3 tasti fisici: il 
+tasto 'Power', per accendere e spegnere il telefono, e i tasti
+'Volume Up' e 'Volume Down' per alzare/abbassare il volume del
+telefono. Questi solitamente sono presenti ai lati del telefono o 
+in alcuni casi, nella parte superiore o sulla cover posteriore.
+Inoltre puo' essere presente un tasto 'Home' posizionato sempre in 
+basso e al centro del telefono, per recarsi rapidamente alla home.
+Se uno di questi tasti non funziona più, o non funziona 
+correttamente, allora risponda si.

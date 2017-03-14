@@ -1,0 +1,6 @@
+Provi a spegnere il telefono, rimuova la sua microSD e ne inserisca
+un'altra che sappia sia funzionante.
+Ora dopo aver riacceso il telefono vada nelle impostazioni della 
+microSD e se e' presente la voce 'Monta scheda SD' prema quella
+voce. Se dopo aver eseguito questa procedura la scheda viene letta
+correttamente risponda si

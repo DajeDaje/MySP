@@ -1,0 +1,4 @@
+una volta sbloccato il telefono, sulla parte superiore dello 
+schermo e' possibile vedere alcune icone(batteria, orario, 
+operatore telefofonico...). Se e' presente l'icona di un 
+aereoplano, allora la modalità aereo e' attiva.

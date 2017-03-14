@@ -1,0 +1,6 @@
+per controllare se la microSD e' riconosciuta dal telefono
+bisogna prima di tutto andare nelle impostazioni e se il nostro 
+telefono e' compatibile con le memorie microSD, ci sara' una
+voce denominata 'Memoria'. In questa pagina troveremo una scheda
+con una serie di opzioni dedicate alla nostra microSD.
+Se e' presente la voce 'Monta scheda SD' allora risponda si.

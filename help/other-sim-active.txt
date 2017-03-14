@@ -1,0 +1,5 @@
+Provi a spegnere il telefono, rimuova la sua SIM e ne inserisca
+un'altra che sappia sia attiva.
+Ora dopo aver riacceso il telefono la SIM viene letta 
+correttamente, e quindi puo' anche chiamare tranquillamente
+risponda si.

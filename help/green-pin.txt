@@ -1,0 +1,8 @@
+per vedere il colore dei pin della batteria bisogna prima 
+rimuoverla. Naturalmente sara' prima neccessario spegnere il 
+telefono. Per alcuni telefoni non e' possibile rimuovere la 
+batteria, in questo caso risponda non so.
+In caso contrario rimuova prima la cover esterna del 
+telefono e successivamente sollevi la batteria.
+Nella parte superiore o inferiore di essa saranno presenti alcuni 
+pin, se sono di colore verde allora risponda si.

@@ -1,0 +1,6 @@
+il caricatore del telefono e' solitamente composto da due 
+componenti: il trasformatore e il cavo.
+Provi ad utilizzare un trasformatore con la stessa tensione del
+suo trasformatore originale(e' visibile in piccolo sul 
+trasformatore una dicitura del tipo "OUTPUT: 1A").
+Se adesso il telefono carica correttamente allora risponda si.

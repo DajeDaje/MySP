@@ -1,0 +1,5 @@
+Effettui una chiamata di prova e attivi il vivavoce. 
+Solitamente durante la chiamata e' visualizzabile un tasto 
+rappresentante uno speaker per attivare il vivavoce.
+Una volta attivo, se il suo interlocutore riesce a sentire 
+la sua voce, risponda si.

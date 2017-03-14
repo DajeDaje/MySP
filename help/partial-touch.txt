@@ -1,0 +1,5 @@
+Sblocchi il telefono e apra l'applicazione 'Telefono' da cui e'
+possibile chiamare o comporre un numero.
+Provi a comporre un numero telefonico completo e se riscontra 
+delle difficoltà a comporre in alcune parti del display allora
+risponda si.

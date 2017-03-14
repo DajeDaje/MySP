@@ -1,0 +1,14 @@
+per vedere la memoria RAM bisogna sbloccare il telefono, 
+successivamente andare nelle impostazioni e a seconda del vostro 
+modello di smartphone e sistema operativo, sara' presente una 
+voce simile a 'Memoria'.
+Selezionatela e all'interno saranno presenti diverse informazioni
+rapprensentanti la RAM del dispositivo, come la RAM totale,
+ quella occupata e quella disponibile.
+Se non trovate questa voce, allora bisogna andare sempre nelle 
+impostazioni alla voce 'Applicazioni' fino a trovare una schermata
+con le applicazioni "in esecuzione" dove in basso sara' visibile
+la memoria RAM utilizzata e quella disponibile.
+Se la RAM totale e' minore o uguale a 1GB oppure la RAM disponibile
+ e' inferiore al 10 per cento circa risponda si.
+(NB: non confondere la memoria del dispositivo con la memoria RAM)

@@ -1,0 +1,3 @@
+Se il telefono e' abbastanza rapido nel utilizzo comune, ma 
+una particolare applicazione risulta essere molto lenta, non solo
+ad avviarsi, ma anche nell'utilizzo, allora risponda si.

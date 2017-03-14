@@ -1,0 +1,10 @@
+gli smartphone possono regolare fino a 4 volumi differenti: il 
+primo riguarda la suoneria, il secondo riguarda le notifiche, il
+terzo riguarda la sveglia, e il quarto riguarda i media.
+Premendo il tasto 'Volume Up' verra' mostrata una finestra con i 
+volumi e il loro relativi livelli. In caso venisse mostrato un 
+unico volume, tramite un pulsante a destra di quel volume si 
+potranno visualizzare tutti i volumi. Il volume che ci interessa e'
+quello delle chiamate, si riconosce da un icona di un telefono o di
+una cornetta. Se il pallino che ne indica il livello e' spostato
+tutto a sinistra o disattivato, allora risponda si.
