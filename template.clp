@@ -23,8 +23,9 @@
 	)
 	
 (deftemplate conversation 
-	(slot name)
-	(multislot values)
+	(multislot questions)
+	(multislot answers)
+	(multislot symptoms)
 )
 	
 (deftemplate rule

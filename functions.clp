@@ -70,13 +70,10 @@
 		then
 			(read-file (str-cat "help/" ?symptom))
 		else 
-			(bind ?list (get-all-facts-by-names conversation))
-			(bind ?fq (nth 1 ?list)) ;prelevo i fatti questions, answers, symptoms dalla lista dei fatti di tipo conversation
-			(bind ?fa (nth 2 ?list))
-			(bind ?fs (nth 3 ?list))
-			(bind ?q (fact-slot-value ?fq values)) ;prelevo le liste di domande risposte e sintomi dai fatti
-			(bind ?a (fact-slot-value ?fa values))
-			(bind ?s (fact-slot-value ?fs values))
+			(bind ?conv (nth 1 (get-all-facts-by-names conversation))) ;prelevo i fatti questions, answers, symptoms dalla lista dei fatti di tipo conversation
+			(bind ?q (fact-slot-value ?conv questions)) ;prelevo le liste di domande risposte e sintomi dai fatti
+			(bind ?a (fact-slot-value ?conv answers))
+			(bind ?s (fact-slot-value ?conv symptoms))
 			(print-all-question ?q ?a ?s)
 			(read-file (str-cat "why/" ?symptom))
 		)
@@ -100,21 +97,16 @@
 	(return )
 )
 
-
-
 (deffunction ask-retract ()
 	(printout t "Vuoi cambiare qualcosa dei fatti osservati? si no" crlf)
 	(bind ?answer (read))
 	
 	(if (eq ?answer no) then (return))
 	(if (neq ?answer si) then (return))
-	(bind ?list (get-all-facts-by-names conversation))
-	(bind ?fq (nth 1 ?list)) ;prelevo i fatti questions, answers, symptoms dalla lista dei fatti di tipo conversation
-	(bind ?fa (nth 2 ?list))
-	(bind ?fs (nth 3 ?list))
-	(bind ?q (fact-slot-value ?fq values)) ;prelevo le liste di domande risposte e sintomi dai fatti
-	(bind ?a (fact-slot-value ?fa values))
-	(bind ?s (fact-slot-value ?fs values))
+	(bind ?conv (nth 1 (get-all-facts-by-names conversation))) ;prelevo i fatti questions, answers, symptoms dalla lista dei fatti di tipo conversation
+	(bind ?q (fact-slot-value ?conv questions)) ;prelevo le liste di domande risposte e sintomi dai fatti
+	(bind ?a (fact-slot-value ?conv answers))
+	(bind ?s (fact-slot-value ?conv symptoms))
 	(print-all-question ?q ?a ?s)
 	(bind ?count 1)
 	(printout t "quale fatto vuoi cambiare? ")
@@ -142,11 +134,21 @@
 		)
 		(bind ?count (+ ?count 1))
 	)
-	(bind ?list (get-all-facts-by-names conversation))
-	(bind ?fq (nth 1 ?list))
-	(bind ?fa (nth 2 ?list))
-	(bind ?fs (nth 3 ?list))
-	(modify ?fq (values ?lq))
-	(modify ?fa (values ?la))
-	(modify ?fs (values ?ls))
+	
+	;reask question
+	(progn$ (?fact ?all-fact)
+			(if (eq (nth ?count ?s) (fact-slot-value ?fact symptom)) then
+				(bind ?r (ask-question (nth ?count ?q) (fact-slot-value ?fact symptom) (fact-slot-value ?fact valid-answers)))
+				(if (eq ?r si) then (exclude-question (fact-slot-value ?fact exclusions)))
+				(if (eq ?r no) then (exclude-question (fact-slot-value ?fact no-exclusions)))
+				(modify ?fact (already-asked TRUE))
+				(assert (symptom (name (nth ?count ?s)) (value ?r)))
+				(bind ?lq (create$ ?lq (nth ?count ?q)))
+				(bind ?la (create$ ?la ?r))
+				(bind ?ls (create$ ?ls (nth ?count ?s)))
+			)
+	)
+	
+	(bind ?conv (nth 1 (get-all-facts-by-names conversation)))
+	(modify ?conv (questions ?lq) (answers ?la) (symptoms ?ls))
 )

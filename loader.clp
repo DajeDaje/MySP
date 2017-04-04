@@ -1,4 +1,3 @@
-
 (system "echo %time% > time.txt")
 (load "template.clp")
 (load "functions.clp")

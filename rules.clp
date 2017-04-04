@@ -18,24 +18,16 @@
 			(valid-answers $?valid-answers)
 			(exclusions $?exclusions)
 			(no-exclusions $?no-exclusions))
-			
-	?a <- (conversation (name answers) (values $?answers))
-	?q <- (conversation (name questions) (values $?questions))
-	?s <- (conversation (name symptoms) (values $?symptoms))
+	?a <- (conversation (questions $?questions) (answers $?answers) (symptoms $?symptoms)) 
 	=>
 		(modify ?f (already-asked TRUE))
 		(bind ?r (ask-question ?the-question ?the-symptom ?valid-answers))
 		(if (eq ?r si) then (exclude-question ?exclusions))
 		(if (eq ?r no) then (exclude-question ?no-exclusions))
 		(assert (symptom (name ?the-symptom) (value ?r)))
-		(retract ?a ?q ?s)
-		(assert (conversation (name questions) (values ?questions ?the-question)))
-		(assert (conversation (name answers) (values ?answers ?r)))
-		(assert (conversation (name symptoms) (values ?symptoms ?the-symptom)))
+		(retract ?a)
+		(assert (conversation (questions $?questions ?the-question) (answers $?answers ?r) (symptoms $?symptoms ?the-symptom)) )
 )
-
-
-
 
 (defrule ask-a-question
 	?f <- (question 
@@ -47,20 +39,16 @@
 			(valid-answers $?valid-answers)
 			(exclusions $?exclusions)
 			(no-exclusions $?no-exclusions))
-			
-	?a <- (conversation (name answers) (values $?answers))
-	?q <- (conversation (name questions) (values $?questions))
-	?s <- (conversation (name symptoms) (values $?symptoms))
+		?a <- (conversation (questions $?questions) (answers $?answers) (symptoms $?symptoms)) 
+
 	=>
 		(modify ?f (already-asked TRUE))
 		(bind ?r (ask-question ?the-question ?the-symptom ?valid-answers))
 		(if (eq ?r si) then (exclude-question ?exclusions))
 		(if (eq ?r no) then (exclude-question ?no-exclusions))
 		(assert (symptom (name ?the-symptom) (value ?r)))
-		(retract ?a ?q ?s)
-		(assert (conversation (name questions) (values ?questions ?the-question)))
-		(assert (conversation (name answers) (values ?answers ?r)))
-		(assert (conversation (name symptoms) (values ?symptoms ?the-symptom)))
+		(retract ?a)
+		(assert (conversation (questions $?questions ?the-question) (answers $?answers ?r) (symptoms $?symptoms ?the-symptom)) )
 )
 
 (defrule precursor-is-satisfaied
@@ -94,7 +82,6 @@
 					(certainty (/ (* ?c1 ?c2) 100))))
 )
 
-
 (defrule perform-user-rule-consequent-with-certainty
 	?f <- (rule (certainty ?c1)
 			(assertion symptom)
@@ -119,21 +106,35 @@
 	(modify ?rem2 (certainty (read-file-certainty)))
 )
 
+;; DIAGNOSI & SOLUTION
+
 (defrule explain-diagnosis 
 	(declare (salience -100))
-	(diagnosis (name ?rel) (value ?) (certainty ?per1))
+	?diagn <- (diagnosis (name ?rel) (value ?) (certainty ?per))
+	(not (diagnosis (name ?) (value ?) (certainty ?per1 &:(> ?per1 ?per))))
 	=>
+	(retract ?diagn)
 	(printout t "Diagnosi: ")
 	(read-file (str-cat "diagnosis/" ?rel))
-	(printout t (str-cat (str-cat "con certezza: " ?per1 )"%") crlf)
-	(if (= 0 (length$ (get-all-facts-by-names retraction))) then (assert (retraction)))
+	(printout t (str-cat (str-cat "con certezza: " ?per )"%") crlf)
+	(printout t "la soluzione e': " )
+	(read-file (str-cat "solutions/" ?rel))
+			(printout t "ti e' stata utile questa soluzione? si no " crlf)
+			(bind ?response (read))
+			(if (eq ?response si) then (halt) 
+				else
+						(ask-retract)
+				)
 )	
 
+;; RETRACTION
 
 (defrule retraction
 	(declare (salience -101))
-	?r <- (retraction)
 	=>
-	(retract ?r)
-	(ask-retract)
+	(printout t "spiacente non posso aiutarti, consulta il parere di un esperto..." crlf)
 )
+
+
+
+
