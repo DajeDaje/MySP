@@ -6,7 +6,6 @@
 	(set-fact-duplication TRUE))
 
 ;; QUESTIONS
-
 (defrule ask-a-initial-question
 	(declare (salience 1))
 	?f <- (question 
@@ -17,16 +16,17 @@
 			(symptom ?the-symptom)
 			(valid-answers $?valid-answers)
 			(exclusions $?exclusions)
-			(no-exclusions $?no-exclusions))
-	?a <- (conversation (questions $?questions) (answers $?answers) (symptoms $?symptoms)) 
+			(no-exclusions $?no-exclusions)
+			(expert ?ex))
+	?a <- (conversation (questions $?questions) (answers $?answers) (symptoms $?symptoms) (expert $?experts)) 
 	=>
 		(modify ?f (already-asked TRUE))
-		(bind ?r (ask-question ?the-question ?the-symptom ?valid-answers))
+		(bind ?r (ask-question ?the-question ?the-symptom ?ex ?valid-answers))
 		(if (eq ?r si) then (exclude-question ?exclusions))
 		(if (eq ?r no) then (exclude-question ?no-exclusions))
 		(assert (symptom (name ?the-symptom) (value ?r)))
 		(retract ?a)
-		(assert (conversation (questions $?questions ?the-question) (answers $?answers ?r) (symptoms $?symptoms ?the-symptom)) )
+		(assert (conversation (questions $?questions ?the-question) (answers $?answers ?r) (symptoms $?symptoms ?the-symptom) (expert $?experts ?ex)))
 )
 
 (defrule ask-a-question
@@ -38,17 +38,17 @@
 			(symptom ?the-symptom)
 			(valid-answers $?valid-answers)
 			(exclusions $?exclusions)
-			(no-exclusions $?no-exclusions))
-		?a <- (conversation (questions $?questions) (answers $?answers) (symptoms $?symptoms)) 
-
+			(no-exclusions $?no-exclusions)
+			(expert ?ex))
+		?a <- (conversation (questions $?questions) (answers $?answers) (symptoms $?symptoms) (expert $?experts)) 
 	=>
 		(modify ?f (already-asked TRUE))
-		(bind ?r (ask-question ?the-question ?the-symptom ?valid-answers))
+		(bind ?r (ask-question ?the-question ?the-symptom ?ex ?valid-answers))
 		(if (eq ?r si) then (exclude-question ?exclusions))
 		(if (eq ?r no) then (exclude-question ?no-exclusions))
 		(assert (symptom (name ?the-symptom) (value ?r)))
 		(retract ?a)
-		(assert (conversation (questions $?questions ?the-question) (answers $?answers ?r) (symptoms $?symptoms ?the-symptom)) )
+		(assert (conversation (questions $?questions ?the-question) (answers $?answers ?r) (symptoms $?symptoms ?the-symptom) (expert $?experts ?ex)))
 )
 
 (defrule precursor-is-satisfaied
@@ -112,27 +112,29 @@
 	(declare (salience -100))
 	?diagn <- (diagnosis (name ?rel) (value ?) (certainty ?per))
 	(not (diagnosis (name ?) (value ?) (certainty ?per1 &:(> ?per1 ?per))))
+	(symptom (name OS) (value ?os))
+	(symptom (name brand) (value ?brand))
 	=>
 	(retract ?diagn)
 	(printout t "Diagnosi: ")
 	(read-file (str-cat "diagnosis/" ?rel))
 	(printout t (str-cat (str-cat "con certezza: " ?per )"%") crlf)
 	(printout t "la soluzione e': " )
-	(read-file (str-cat "solutions/" ?rel))
+	(read-file (str-cat "solutions/" ?brand "/" ?os "/" ?rel))
 			(printout t "ti e' stata utile questa soluzione? si no " crlf)
 			(bind ?response (read))
 			(if (eq ?response si) then (halt) 
 				else
 						(ask-retract)
 				)
-)	
+)
 
 ;; RETRACTION
-
 (defrule retraction
 	(declare (salience -101))
 	=>
-	(printout t "spiacente non posso aiutarti, consulta il parere di un esperto..." crlf)
+	(printout t "Con queste informazioni non riesco ad aiutarti." crlf)
+	(if (eq (ask-retract) FALSE) then "Spiacente non posso aiutarti, consulta il parere di un esperto.")
 )
 
 

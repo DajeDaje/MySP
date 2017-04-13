@@ -8,6 +8,7 @@
 	(multislot precursors (default ?DERIVE))
 	(multislot exclusions)
 	(multislot no-exclusions)
+	(slot expert (default FALSE))
 	)
 
 (deftemplate symptom
@@ -26,6 +27,7 @@
 	(multislot questions)
 	(multislot answers)
 	(multislot symptoms)
+	(multislot expert)
 )
 	
 (deftemplate rule

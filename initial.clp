@@ -1,11 +1,15 @@
 
 (deffacts conversation
-	(conversation (questions ) (answers ) (symptoms ))
+	(conversation (questions ) (answers ) (symptoms ) (expert ))
 )
 
 (deffacts battery-rules 
 	(rule (assertion diagnosis)(if battery is si and battery-drain is si)
 		  (then damaged-battery is true with certainty 70)
+	)
+	
+	(rule (assertion diagnosis)(if battery is si and reboot-himself is si)
+		  (then damaged-battery is true with certainty 50)
 	)
 	
 	(rule (assertion diagnosis)(if battery is si and deformed-cover is si)
@@ -52,7 +56,7 @@
 	
 	(question 
 		(symptom battery-drain)
-		(the-question "Lo smartphone si scarica più rapidamente rispetto a quando lo ha acquistato?")
+		(the-question "Lo smartphone si scarica piu' rapidamente rispetto a quando lo ha acquistato?")
 		(valid-answers si no nonso perche aiuto)
 		(precursors expert-battery is no and battery is si)
 		(exclusions not-charge job-oxidation)
@@ -64,6 +68,7 @@
 		(valid-answers si no nonso perche aiuto)
 		(precursors expert-battery is si and battery is si)
 		(exclusions not-charge job-oxidation)
+		(expert TRUE)
 	)
 	
 	(question 
@@ -77,7 +82,7 @@
 		
 	(question 
 		(symptom infalted-battery)
-		(the-question "La batteria del suo smartphone risulta essere più gonfia del normale?")
+		(the-question "La batteria del suo smartphone risulta essere piu' gonfia del normale?")
 		(valid-answers si no nonso perche aiuto)
 		(precursors expert-battery is no and battery is si)
 		(exclusions not-charge job-oxidation)
@@ -92,8 +97,24 @@
 	)
 	
 	(question 
+		(symptom more-one-year)
+		(the-question "Il telefono lo hai da piu' di un anno?")
+		(valid-answers si no nonso perche aiuto)
+		(precursors expert-battery is no and battery is si)
+		(no-exclusions inactivity-three-months overheat-smartphone infalted-battery deformed-cover battery-drain)
+	)
+	
+	(question 
 		(symptom inactivity-three-months)
 		(the-question "Lo smartphone e' inutilizzato da piu' di tre mesi?")
+		(valid-answers si no nonso perche aiuto)
+		(precursors expert-battery is no and battery is si)
+		(exclusions not-charge job-oxidation)
+	)
+	
+	(question 
+		(symptom reboot-himself)
+		(the-question "Il telefono si riavvia da solo?")
 		(valid-answers si no nonso perche aiuto)
 		(precursors expert-battery is no and battery is si)
 		(exclusions not-charge job-oxidation)
@@ -112,6 +133,7 @@
 		(the-question "La batteria dello smartphone non si carica correttamente?")
 		(valid-answers si no nonso perche aiuto)
 		(precursors expert-battery is si and battery is si)
+		(expert TRUE)
 		(exclusions battery-drain deformed-cover infalted-battery overheat-smartphone inactivity-three-months job-oxidation)
 	)
 	
@@ -145,13 +167,14 @@
 		(valid-answers si no nonso perche aiuto)
 		(precursors expert-battery is si and battery is si and not-charge is si)
 		(exclusions power-supply)
+		(expert TRUE)
 	)
 	
 	(question 
 		(symptom job-oxidation)
 		(the-question "Frequenta spesso ambienti con presenza di umidita' o adiacenti al mare?")
 		(valid-answers si no nonso perche aiuto)
-		(precursors expert-battery is no and battery is si)
+		(precursors battery is si)
 	)
 	
 	
@@ -167,6 +190,7 @@
 		(the-question "I pin della batteria hanno un colore verdognolo?")
 		(valid-answers si no nonso perche aiuto)
 		(precursors expert-battery is si and battery is si and job-oxidation is si)
+		(expert TRUE)
 	)
 )
 
@@ -236,7 +260,7 @@
 	
 	(question 
 		(symptom reload-more-years)
-		(the-question "La sua ultima ricarica telefonica risale a più di un anno fa?")
+		(the-question "La sua ultima ricarica telefonica risale a piu' di un anno fa?")
 		(valid-answers si no nonso perche aiuto)
 		(precursors expert-call is no and calls is si and sim is si)
 		(exclusions aereo-mode-on other-sim-active)
@@ -247,6 +271,7 @@
 		(the-question "La SIM e' disattiva?")
 		(valid-answers si no nonso perche aiuto)
 		(precursors expert-call is si and calls is si and sim is si)
+		(expert TRUE)
 		(exclusions aereo-mode-on other-sim-active)
 	)
 	
@@ -270,13 +295,14 @@
 		(the-question "Sostituendo la SIM con un'altra funzionante, lo smartphone presenta i precedenti problemi?")
 		(valid-answers si no nonso perche aiuto)
 		(precursors expert-call is si and calls is si and sim is si and reload-more-years is no and aereo-mode-on is no)
+		(expert TRUE)
 	)
 	
 	(question 
 		(symptom microphone)
 		(the-question "Ha problemi relativi al microfono?")
 		(valid-answers si no nonso perche aiuto)
-		(precursors expert-call is no and calls is si)
+		(precursors calls is si)
 		(exclusions sim speakerphone)
 	)
 	
@@ -284,7 +310,7 @@
 		(symptom speakerphone)
 		(the-question "Durante le chiamate ha difficolta' nel sentire la voce del suo interlocutore?")
 		(valid-answers si no nonso perche aiuto)
-		(precursors expert-call is no and calls is si)
+		(precursors calls is si)
 		(exclusions microphone sim)
 	)
 
@@ -302,6 +328,7 @@
 		(valid-answers si no nonso perche aiuto)
 		(precursors expert-call is si and calls is si and microphone is si)
 		(exclusions low-signal interlocutor-cant-hear)
+		(expert TRUE)
 	)
 	
 	(question 
@@ -318,13 +345,14 @@
 		(valid-answers si no nonso perche aiuto)
 		(precursors expert-call is si and calls is si and microphone is si)
 		(exclusions earphone-active interlocutor-cant-hear)
+		(expert TRUE)
 	)
 	
 	(question 
 		(symptom interlocutor-cant-hear)
 		(the-question "Durante le chiamate, attivando il vivavoce, il suo interlocutore riesce a sentire la sua voce?")
 		(valid-answers si no nonso perche aiuto)
-		(precursors expert-call is no and calls is si and microphone is si and earphone-active is no and low-signal is no)
+		(precursors calls is si and microphone is si and earphone-active is no and low-signal is no)
 	)
 
 	(question 
@@ -345,10 +373,11 @@
 	
 	(question 
 		(symptom speaker)
-		(the-question "Con il vivavoce attivo sentire il suo interlocutore?")
+		(the-question "Con il vivavoce attivo sente il suo interlocutore?")
 		(valid-answers si no nonso perche aiuto)
-		(precursors expert-call is no and calls is si and speakerphone is si and earphone-active is no and volume-off is no)
+		(precursors expert-call is si and calls is si and speakerphone is si and earphone-active is no and volume-off is no)
 		(exclusions )
+		(expert TRUE)
 	)
 )
 
@@ -386,16 +415,17 @@
 	
 	(question 
 		(symptom slow-application)
-		(the-question "La lentezza riguarda una o piu' applicazioni in particolare?")
+		(the-question "La lentezza riguarda una o piu' stesse applicazioni in particolare?")
 		(valid-answers si no nonso perche aiuto)
 		(precursors expert-memory is si and slowness is si)
+		(expert TRUE)
 	)
 	
 	(question 
 		(symptom less-ram-1GB)
-		(the-question "Il dispositivo ha una RAM inferiore ad 1GB ?")
+		(the-question "Il dispositivo ha una RAM inferiore ad 1GB?")
 		(valid-answers si no nonso perche aiuto)
-		(precursors expert-memory is no and slowness is si and slow-application is no)
+		(precursors slowness is si and slow-application is no)
 		(exclusions less-memory-200MB)
 	)
 
@@ -413,6 +443,7 @@
 		(valid-answers si no nonso perche aiuto)
 		(precursors expert-memory is si and slowness is si and slow-application is no)
 		(exclusions less-ram-1GB)
+		(expert TRUE)
 	)
 )
 
@@ -454,6 +485,7 @@
 		(valid-answers si no nonso perche aiuto)
 		(exclusions other-sd-recognized)
 		(precursors expert-memory is si and microsd is si)
+		(expert TRUE)
 	)
 	
 	(question 
@@ -511,6 +543,7 @@
 		(valid-answers si no nonso perche aiuto)
 		(exclusions phisic-button)
 		(precursors expert-display is no and display is si)
+		(expert TRUE)
 	)
 	
 	(question 
@@ -519,6 +552,7 @@
 		(valid-answers si no nonso perche aiuto)
 		(exclusions phisic-button)
 		(precursors expert-display is si and display is si)
+		(expert TRUE)
 	)
 	
 	(question 
@@ -535,6 +569,7 @@
 		(valid-answers si no nonso perche aiuto)
 		(exclusions partial-touch)
 		(precursors expert-display is si and display is si and touch is si)
+		(expert TRUE)
 	)
 	
 	(question 
@@ -551,6 +586,7 @@
 		(valid-answers si no nonso perche aiuto)
 		(exclusions partial-touch total-touch)
 		(precursors expert-display is si and display is si and touch is si)
+		(expert TRUE)
 	)
 	
 )
@@ -558,6 +594,23 @@
 ;;DOMANDE HC
 
 (deffacts questionHC
+
+	(question 
+		(user-question TRUE)
+		(symptom brand)
+		(the-question "qual'e' la marca del tuo smartphone?")
+		(valid-answers samsung huawei aiuto)
+		(precursors )
+	)
+	
+	(question 
+		(user-question TRUE)
+		(symptom OS)
+		(the-question "Indicami il sistema operativo del tuo smartphone.")
+		(valid-answers lollipop5.1.1 marshmallow6.0 aiuto)
+		(precursors )
+	)
+
 	(question 
 		(user-question TRUE)
 		(symptom expert-battery)
@@ -569,7 +622,7 @@
 	(question 
 		(user-question TRUE)
 		(symptom expert-display)
-		(the-question "Hai controllato se tutta la parte dello schermo è non funzionante?")
+		(the-question "Hai controllato se tutta la parte dello schermo non funziona?")
 		(valid-answers si no)
 		(precursors )
 	)
@@ -604,7 +657,19 @@
 	(rule 
 		(assertion symptom)
 		(if expert is si)
-		  (then expert-battery is si with certainty 50 and expert-call is si with certainty 70 and expert-display is si with certainty 80 and expert-memory is si with certainty 70)
+		  (then expert-battery is si with certainty 50 and expert-call is si with certainty 50 and expert-display is si with certainty 50 and expert-memory is si with certainty 70)
+	)
+	
+	(rule 
+		(assertion symptom)
+		(if expert-battery is si)
+		  (then infalted-battery is no with certainty 40 and deformed-cover is no with certainty 60 and overheat-smartphone is no with certainty 70)
+	)
+	
+	(rule 
+		(assertion symptom)
+		(if expert-call is si)
+		  (then aereo-mode-on is no with certainty 90 and deactive-sim is no with certainty 50 and volume-off is no with certainty 80 and earphone-active is no with certainty 70)
 	)
 )
 

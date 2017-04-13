@@ -8,7 +8,7 @@
 )
 
 (deffunction read-file (?diagn)
-	(open (str-cat ?diagn ".txt") File "r")
+	(if (not (open (str-cat ?diagn ".txt") File "r") ) then (printout t "file" ?diagn "non trovato." crlf))
 	(bind ?readed (readline File))
 	(while (neq ?readed  EOF)
 		(printout t ?readed crlf)
@@ -62,13 +62,16 @@
 			then (bind ?answer (lowcase ?answer))))
 	?answer)
 
-(deffunction ask-question (?question ?symptom $?allowed-values)
+(deffunction ask-question (?question ?symptom ?expert $?allowed-values)
 	(printout t crlf)
 	(bind ?response (ctrl-question ?question ?symptom $?allowed-values))
 	(while (or (eq ?response aiuto) (eq ?response perche))
 		(if (eq ?response aiuto)
 		then
-			(read-file (str-cat "help/" ?symptom))
+			(if (eq ?expert TRUE) then (system (str-cat "start help/esperto/" ?symptom ".pdf"))
+				else
+					(system (str-cat "start help/non-esperto/" ?symptom ".pdf"))
+			)
 		else 
 			(bind ?conv (nth 1 (get-all-facts-by-names conversation))) ;prelevo i fatti questions, answers, symptoms dalla lista dei fatti di tipo conversation
 			(bind ?q (fact-slot-value ?conv questions)) ;prelevo le liste di domande risposte e sintomi dai fatti
@@ -101,12 +104,13 @@
 	(printout t "Vuoi cambiare qualcosa dei fatti osservati? si no" crlf)
 	(bind ?answer (read))
 	
-	(if (eq ?answer no) then (return))
+	(if (eq ?answer no) then (return FALSE))
 	(if (neq ?answer si) then (return))
 	(bind ?conv (nth 1 (get-all-facts-by-names conversation))) ;prelevo i fatti questions, answers, symptoms dalla lista dei fatti di tipo conversation
 	(bind ?q (fact-slot-value ?conv questions)) ;prelevo le liste di domande risposte e sintomi dai fatti
 	(bind ?a (fact-slot-value ?conv answers))
 	(bind ?s (fact-slot-value ?conv symptoms))
+	(bind ?e (fact-slot-value ?conv expert))
 	(print-all-question ?q ?a ?s)
 	(bind ?count 1)
 	(printout t "quale fatto vuoi cambiare? ")
@@ -118,18 +122,21 @@
 	(bind ?lq (create$))
 	(bind ?la (create$))
 	(bind ?ls (create$))
+	(bind ?le (create$))
 	
 	(while (< ?count ?from) 
 		(progn$ (?fact ?all-fact)
-			(if (eq (nth ?count ?s) (fact-slot-value ?fact symptom)) then
+			(if (and (eq (nth ?count ?s) (fact-slot-value ?fact symptom)) (eq (nth ?count ?e) (fact-slot-value ?fact expert))) then
 				(printout t (fact-slot-value ?fact symptom) crlf)
 				(if (eq (nth ?count ?a) si) then (exclude-question (fact-slot-value ?fact exclusions)))
+				(if (eq (nth ?count ?a) no) then (exclude-question (fact-slot-value ?fact no-exclusions)))
 				(printout t (fact-slot-value ?fact exclusions) crlf)
 				(modify ?fact (already-asked TRUE))
 				(assert (symptom (name (nth ?count ?s)) (value (nth ?count ?a))))
 				(bind ?lq (create$ ?lq (nth ?count ?q)))
 				(bind ?la (create$ ?la (nth ?count ?a)))
 				(bind ?ls (create$ ?ls (nth ?count ?s)))
+				(bind ?le (create$ ?le (nth ?count ?e)))
 			)
 		)
 		(bind ?count (+ ?count 1))
@@ -137,7 +144,7 @@
 	
 	;reask question
 	(progn$ (?fact ?all-fact)
-			(if (eq (nth ?count ?s) (fact-slot-value ?fact symptom)) then
+			(if (eq (nth ?count ?s) (fact-slot-value ?fact symptom)) (eq (nth ?count ?e) (fact-slot-value ?fact expert))) then
 				(bind ?r (ask-question (nth ?count ?q) (fact-slot-value ?fact symptom) (fact-slot-value ?fact valid-answers)))
 				(if (eq ?r si) then (exclude-question (fact-slot-value ?fact exclusions)))
 				(if (eq ?r no) then (exclude-question (fact-slot-value ?fact no-exclusions)))
@@ -146,9 +153,10 @@
 				(bind ?lq (create$ ?lq (nth ?count ?q)))
 				(bind ?la (create$ ?la ?r))
 				(bind ?ls (create$ ?ls (nth ?count ?s)))
+				(bind ?le (create$ ?le (nth ?count ?e)))
 			)
 	)
 	
 	(bind ?conv (nth 1 (get-all-facts-by-names conversation)))
-	(modify ?conv (questions ?lq) (answers ?la) (symptoms ?ls))
+	(modify ?conv (questions ?lq) (answers ?la) (symptoms ?ls) (expert ?le))
 )
