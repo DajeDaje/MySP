@@ -134,7 +134,7 @@
 	(declare (salience -101))
 	=>
 	(printout t "Con queste informazioni non riesco ad aiutarti." crlf)
-	(if (eq (ask-retract) FALSE) then "Spiacente non posso aiutarti, consulta il parere di un esperto.")
+	(if (eq (ask-retract) FALSE) then (printout t "Spiacente non posso aiutarti, consulta il parere di un esperto." crlf))
 )
 
 

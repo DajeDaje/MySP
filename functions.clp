@@ -8,7 +8,7 @@
 )
 
 (deffunction read-file (?diagn)
-	(if (not (open (str-cat ?diagn ".txt") File "r") ) then (printout t "file" ?diagn "non trovato." crlf))
+	(if (not (open (str-cat ?diagn ".txt") File "r") ) then (printout t "file" ?diagn "non trovato." crlf) (return ))
 	(bind ?readed (readline File))
 	(while (neq ?readed  EOF)
 		(printout t ?readed crlf)
@@ -144,8 +144,8 @@
 	
 	;reask question
 	(progn$ (?fact ?all-fact)
-			(if (eq (nth ?count ?s) (fact-slot-value ?fact symptom)) (eq (nth ?count ?e) (fact-slot-value ?fact expert))) then
-				(bind ?r (ask-question (nth ?count ?q) (fact-slot-value ?fact symptom) (fact-slot-value ?fact valid-answers)))
+			(if (and (eq (nth ?count ?s) (fact-slot-value ?fact symptom)) (eq (nth ?count ?e) (fact-slot-value ?fact expert))) then
+				(bind ?r (ask-question (nth ?count ?q) (fact-slot-value ?fact symptom) (fact-slot-value ?fact expert) (fact-slot-value ?fact valid-answers)))
 				(if (eq ?r si) then (exclude-question (fact-slot-value ?fact exclusions)))
 				(if (eq ?r no) then (exclude-question (fact-slot-value ?fact no-exclusions)))
 				(modify ?fact (already-asked TRUE))
